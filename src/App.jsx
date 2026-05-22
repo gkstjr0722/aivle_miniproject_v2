@@ -25,7 +25,7 @@ function App() {
     loadData();
   }, []);
 
-  const handleReviewLike = async(id){
+  const handleReviewLike = async(id)=>{
     const review = reviews.find( r => r.id ===id);
 
     const res = await fetch ("`http://localhost:3000/reviews/${id}`",{
@@ -35,7 +35,7 @@ function App() {
     });
     const updated = await res.json();
     setReviews (reiews.map ( (r) => r.id ===id ? updated : r ) );
-  }
+  };
   const handleBookLikes = async (id) => {
     try {
       const book = books.find((b) => b.id === id);
