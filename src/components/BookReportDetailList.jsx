@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { request } from "./api.js";
 
-function ReviewForm({ book, onCreate }) {
+function BookReportDetailList({ book, onCreate }) {
   const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
 
