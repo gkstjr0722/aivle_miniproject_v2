@@ -5,11 +5,11 @@ function HomePage({ books, reviews }) {
 
   const topBooks = [...books]
     .sort((a, b) => b.likes - a.likes)
-    .slice(0, 3);
+    .slice(0, 4);
 
   const topReviews = [...reviews]
   .sort((a, b) => b.likes - a.likes)
-  .slice(0, 3);
+  .slice(0, 4);
 
   return (
     <div className="app">
