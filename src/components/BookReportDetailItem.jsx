@@ -33,13 +33,15 @@ function ReviewItem({ review, bookTitle, onLike, onEdit, onDelete }) {
 
   if (isEditing){
     return(
-    <div>
+    <div className = "review-fix-form">
        <input
+        className="review-fix-input"
         type="text"
         value={nickname}
         onChange={(event) => setNickname(event.target.value)}
       />
       <input
+        className="review-fix-input"
         type="text"
         value={content}
         onChange={(event) => setContent(event.target.value)}
@@ -65,13 +67,13 @@ function ReviewItem({ review, bookTitle, onLike, onEdit, onDelete }) {
         </div>
 
         <div className="review-actions">
-          <button className="mini-like-button" onClick={()=>{ onLike(review.id) }}>
+          <button className="like-btn" onClick={()=>{ onLike(review.id) }}>
             👍 {review.likes}
           </button>
           <button className="sub-button" onClick={()=>{setIsEditing(true)}}>
             수정
           </button>
-          <button className="danger-button" onClick={()=>{onDelete(review.id)}}>
+          <button className="sub-button" onClick={()=>{onDelete(review.id)}}>
             삭제
           </button>
         </div>
