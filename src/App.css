@@ -559,13 +559,17 @@ body {
 }
 
 .detail-review-list{
-    height: 300px;
 
-    overflow-y: auto;
+    max-width: 1200px;
+    width: 100%;
 
-    padding-right: 10px;
+    margin: 24px auto 80px;
+    padding: 0 20px;
 
-    margin-bottom: 30px;
+    box-sizing: border-box;
+
+    height: auto;
+    overflow: visible;
 }
 .detail-review-list::-webkit-scrollbar-thumb{
     background: #bbb;
@@ -574,30 +578,35 @@ body {
 
 /* 리뷰 하나 */
 .detail-review-item{
-    padding: 20px;
+    width: 100%;
+  max-width: none;
 
-    margin-bottom: 15px;
+  margin: 0;
+  padding: 0;
 
-    background: white;
-    border-radius: 10px;
-
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  background: transparent;
+  box-shadow: none;
 }
 
-.detail-review-card{
+.detail-review-card,
+.review-form{
   max-width: 1200px;
-  margin: 24px auto 0;
-  padding: 24px 32px;
+  width: 100%;
+
+  margin: 32px auto;
+  padding: 28px 32px;
 
   background: white;
   border-radius: 18px;
-  box-sizing: border-box;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 
+  box-sizing: border-box;
   text-align: center;
 
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  height: auto;
+  min-height: auto;
+  overflow: visible;
 }
-
 /* LIST PAGE */
 
 .list-page {
@@ -806,16 +815,6 @@ body {
 
 
 /* 리뷰 작성 폼 */
-.review-form {
-
-  max-width: 1200px;
-  margin: 40px auto 0;
-  padding: 24px 32px;
-
-  background: white;
-  border-radius: 18px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
 
 .review-form input,
 .review-form textarea {
@@ -926,28 +925,46 @@ body {
 }
 
 .review-fix-form {
-   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+   width: 100%;
+  box-sizing: border-box;
 
-  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  max-width: none;
+
+  
 }
 
-.review-fix-input {
-  width: 180px;
-  height: 36px;
+.review-fix-input,
+.review-fix-textarea {
+  
 
-  padding: 0 12px;
+  width: 100%;
+  box-sizing: border-box;
 
-  border: 1px solid #dcdfe6;
+  border: 1px solid #ddd;
   border-radius: 10px;
 
+  padding: 13px 14px;
   font-size: 14px;
   outline: none;
+}
 
-  background-color: white;
-  transition: 0.25s;
+.review-fix-textarea {
+  height: 100px;
+  resize: none;
+}
+
+.review-fix-input:focus,
+.review-fix-textarea:focus {
+  border-color: #6a11cb;
+  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.12);
 }
 
 .section-main-title {

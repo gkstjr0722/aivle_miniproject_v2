@@ -32,26 +32,32 @@ function ReviewItem({ review, bookTitle, onLike, onEdit, onDelete }) {
 
   if (isEditing){
     return(
-    <div className = "review-fix-form">
-       <input
-        className="review-fix-input"
-        type="text"
-        value={nickname}
-        onChange={(event) => setNickname(event.target.value)}
-      />
-      <input
-        className="review-fix-input"
-        type="text"
-        value={content}
-        onChange={(event) => setContent(event.target.value)}
-      />
-      <button className="sub-button" onClick={handleUpdate}>
+      <article className="detail-review-card">
+        <div className = "review-fix-form">
+          <p>닉네임</p>
+          <input
+            className="review-fix-input"
+            type="text"
+            value={nickname}
+            onChange={(event) => setNickname(event.target.value)}
+          />
+          <p>리뷰 내용</p>
+          <input
+            className="review-fix-textarea"
+            type="text"
+            value={content}
+            onChange={(event) => setContent(event.target.value)}
+          />
+          <div className="review-actions">
+            <button className="sub-button" onClick={handleUpdate}>
             수정하기
-      </button>
-      <button className="sub-button" onClick={()=>{setIsEditing(false)}}>
+          </button>
+          <button className="sub-button" onClick={()=>{setIsEditing(false)}}>
             취소
-      </button>
-    </div>
+          </button>
+          </div>
+        </div>
+      </article>
     )
   }
   else
