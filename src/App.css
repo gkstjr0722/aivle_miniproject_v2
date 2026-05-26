@@ -780,28 +780,34 @@ body {
 
 /* 리뷰 작성 폼 */
 .review-form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 24px 32px;
 
   background: white;
-  padding: 28px;
   border-radius: 18px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-
-  margin: 40px 0 30px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
 .review-form input,
 .review-form textarea {
-  padding: 13px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
+
+   width: 100%;
+  box-sizing: border-box;
+
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 14px;
+
   font-size: 15px;
-  font-family: inherit;
   outline: none;
-  background: white;
-  resize: vertical;
+}
+
+.review-form textarea {
+  height: 110px;
+  resize: none;
+  margin-top: 14px;
 }
 
 .review-form input:focus,
