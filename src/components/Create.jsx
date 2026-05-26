@@ -11,75 +11,125 @@ function Create({ onCreate }) {
   const [generating, setGenerating] = useState(false);
 
   const handleGenerateCover = async () => {
+
     if (!apiKey.trim()) {
       alert('OpenAI API Key를 입력하세요');
       return;
     }
+
+    if (!apiKey.startsWith('sk-')) {
+      alert('올바른 OpenAI API Key 형식이 아닙니다');
+      return;
+    }
+
     if (!title.trim() && !content.trim()) {
       alert('제목 또는 내용을 입력해야 표지를 생성할 수 있습니다');
       return;
     }
 
-    const prompt =
-      `다음 책에 어울리는 표지 일러스트를 생성해 주세요.\n` +
-      `제목: ${title}\n` +
-      `저자: ${author}\n` +
-      `내용: ${content}`;
+    // 추가
+    if (title.trim().length > 100) {
+      alert('제목은 100자 이하로 입력하세요');
+      return;
+    }
 
     setGenerating(true);
+
     try {
-      const res = await fetch('https://api.openai.com/v1/images/generations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model,
-          prompt,
-          n: 1,
-          size: '1024x1024',
-          quality,
-        }),
-      });
+
+      const prompt =
+        `다음 책에 어울리는 표지 일러스트를 생성해 주세요.\n` +
+        `제목: ${title.trim()}\n` +
+        `저자: ${author.trim()}\n` +
+        `내용: ${content.trim()}`;
+
+      const res = await fetch(
+        'https://api.openai.com/v1/images/generations',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${apiKey.trim()}`,
+          },
+          body: JSON.stringify({
+            model,
+            prompt,
+            n: 1,
+            size: '1024x1024',
+            quality,
+          }),
+        }
+      );
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message || '이미지 생성 실패');
+
+      if (!res.ok) {
+        throw new Error(
+          data?.error?.message || '이미지 생성 실패'
+        );
+      }
 
       const item = data?.data?.[0];
+
       const url = item?.b64_json
         ? `data:image/png;base64,${item.b64_json}`
         : item?.url;
-      if (!url) throw new Error('응답에서 이미지를 찾을 수 없습니다');
+
+      if (!url) {
+        throw new Error(
+          '응답에서 이미지를 찾을 수 없습니다'
+        );
+      }
+
       setCoverImageUrl(url);
+
     } catch (err) {
+
       alert(`표지 생성 오류: ${err.message}`);
+
     } finally {
+
       setGenerating(false);
+
     }
   };
 
   const handleSubmit = async () => {
+
     if (!title.trim() || !author.trim()) {
       alert('제목과 저자를 입력하세요');
+      return;
+    }
+
+    if (title.trim().length < 2) {
+      alert('제목은 2자 이상 입력하세요');
+      return;
+    }
+
+    if (author.trim().length < 2) {
+      alert('저자명은 2자 이상 입력하세요');
       return;
     }
 
     const now = new Date().toISOString();
 
     try {
+
       await onCreate({
-        title,
-        author,
-        content,
+        title: title.trim(),
+        author: author.trim(),
+        content: content.trim(),
         likes: 0,
         coverImageUrl,
 
         createdAt: now,
         updatedAt: now,
       });
+
     } catch (err) {
+
       alert(`등록 실패: ${err.message}`);
+
     }
   };
 
