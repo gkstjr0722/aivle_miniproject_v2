@@ -1,50 +1,35 @@
-import BookReportHomeItem from "./BookReportHomeItem.jsx";
+import BookReportHomeItem from './BookReportHomeItem';
 
-function BookReportHomeList({
-  reviews = [],
-  books = [],
-  onReviewClick,
-  onLike,
-  onEdit,
-  onDelete,
-}) {
-  const topReviews = [...reviews]
-    .sort((a, b) => Number(b.likes || 0) - Number(a.likes || 0))
-    .slice(0, 10);
-
-  function getBookTitle(review) {
-    if (review.bookTitle) {
-      return review.bookTitle;
-    }
-
-    const matchedBook = books.find(
-      (book) => Number(book.id) === Number(review.bookId)
-    );
-
-    return matchedBook ? matchedBook.title : "알 수 없는 도서";
-  }
-
+function BookReportHomeList({ reviews, books }) {
   return (
-    <section className="section">
-      <h2>인기 리뷰 TOP 10</h2>
+    <section className="review-section">
+
+      <div className="review-title-wrap">
+
+        <h2 className="section-main-title">
+          인기 리뷰
+        </h2>
+
+      </div>
 
       <div className="review-list">
-        {topReviews.length === 0 ? (
-          <p className="empty-text">아직 등록된 리뷰가 없습니다.</p>
-        ) : (
-          topReviews.map((review) => (
+
+        {reviews.map((review) => {
+          const bookTitle = books.find(
+            (b) => String(b.id) === String(review.bookId)
+          )?.title;
+
+          return (
             <BookReportHomeItem
-              key={review.id}
               review={review}
-              bookTitle={getBookTitle(review)}
-              onClick={() => onReviewClick(review)}
-              onLike={(event) => onLike(event, review)}
-              onEdit={(event) => onEdit(event, review)}
-              onDelete={(event) => onDelete(event, review)}
+              bookTitle={bookTitle}
+              key={review.id}
             />
-          ))
-        )}
+          );
+        })}
+
       </div>
+
     </section>
   );
 }

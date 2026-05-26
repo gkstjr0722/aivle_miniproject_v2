@@ -5,7 +5,7 @@ function HomePage({ books, reviews }) {
 
   const topBooks = [...books]
     .sort((a, b) => b.likes - a.likes)
-    .slice(0, 4);
+    .slice(0, 8);
 
   const topReviews = [...reviews]
   .sort((a, b) => b.likes - a.likes)
@@ -35,16 +35,21 @@ function HomePage({ books, reviews }) {
           </h2>
         </div>
 
-        <div className="book-list">
+      <div className="home-book-list">
 
-          {topBooks.map((book) => (
+        {topBooks.map((book) => (
 
-            <div
-              className="book-card"
-              key={book.id}
+          <div
+            className="home-book-card"
+            key={book.id}
+          >
+
+            <Link
+              to={`/detail/${book.id}`}
+              className="image-link"
             >
 
-              <div className="image-wrap">
+              <div className="home-image-wrap">
 
                 <img
                   src={book.coverImageUrl}
@@ -53,42 +58,29 @@ function HomePage({ books, reviews }) {
 
               </div>
 
-              <div className="book-content">
+            </Link>
 
-                <div className="top-row">
+            <div className="home-book-content">
 
-                  <h2>
-                    {book.title}
-                  </h2>
+              <h3 className="home-book-title">
+                {book.title}
+              </h3>
 
-                  <div className="book-like">
-                    ❤️ {book.likes}
-                  </div>
-
-                </div>
-
-                <span className="author">
-                  {book.author}
-                </span>
-
-                <p>
-                  {book.content}
-                </p>
-
-                <Link
-                  to={`/detail/${book.id}`}
-                  className="detail-link"
-                >
-                  자세히 보기
-                </Link>
-
+              <div className="home-book-like">
+                ❤️ {book.likes}
               </div>
+
+              <span className="home-author">
+                {book.author}
+              </span>
 
             </div>
 
-          ))}
+          </div>
 
-        </div>
+        ))}
+
+      </div>
 
       </section>
 
@@ -105,38 +97,32 @@ function HomePage({ books, reviews }) {
         <div className="review-list">
 
           {topReviews.map((review) => (
-
-            <div
-              className="review-card"
-              key={review.id}
-            >
-
-              <div className="review-top">
-
-                <div>
-
-                  <h3>
-                    {review.nickname}
-                  </h3>
-                  <span>
-                    {
-                      books.find(
-                        (b) =>
-                          String(b.id) ===
-                          String(review.bookId)
-                      )?.title
-                    }
-                  </span>
-                </div>
-
-                <div className="review-like">
-                  ❤️ {review.likes}
-                </div>
+        <Link
+          to={`/detail/${review.bookId}`}
+          className="review-card-link"
+          key={review.id}
+        >
+          <div className="review-card">
+            <div className="review-top">
+              <div>
+                <h3>{review.nickname}</h3>
+                <span>
+                  {
+                    books.find(
+                      (b) =>
+                        String(b.id) ===
+                        String(review.bookId)
+                    )?.title
+                  }
+                </span>
               </div>
-              <p>
-                {review.content}
-              </p>
+              <div className="review-like">
+                ❤️ {review.likes}
+              </div>
             </div>
+            <p>{review.content}</p>
+          </div>
+        </Link>
 
           ))}
 
