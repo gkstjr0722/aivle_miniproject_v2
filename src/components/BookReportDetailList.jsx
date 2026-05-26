@@ -46,7 +46,7 @@ function BookReportDetailList({ book, review,  onCreate, onReviewLike, onReviewE
   }
 
   return (
-    <div>
+    <article>
     <form className="review-form" onSubmit={handleSubmit}>
       <input
         type="text"
@@ -76,7 +76,7 @@ function BookReportDetailList({ book, review,  onCreate, onReviewLike, onReviewE
         onDelete={onReviewDelete}/> 
       )}
     </ul>
-    </div>
+    </article>
   );
 }
 
