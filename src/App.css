@@ -13,7 +13,7 @@ body {
 }
 
 .app {
-  width: 90%;
+  width: 100%;
   max-width: 1400px;
   margin: 30px auto;
 }
@@ -32,12 +32,6 @@ body {
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-.logo {
-  color: white;
-  font-size: 28px;
-  font-weight: 700;
-}
-
 .header nav {
   display: flex;
   align-items: center;
@@ -54,6 +48,12 @@ body {
 
 .header a:hover {
   opacity: 0.7;
+}
+
+.logo {
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
 }
 
 .add-book-btn {
@@ -94,7 +94,13 @@ body {
   font-size: 18px;
 }
 
-/* SEARCH */
+.logo h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -1px;
+}
 
 .search-box {
   display: flex;
@@ -305,7 +311,6 @@ body {
 
 }
 
-/* 좋아요 */
 
 .top-row {
   display: flex;
