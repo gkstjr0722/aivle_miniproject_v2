@@ -6,9 +6,11 @@ function ListPage({ books, tags }) {
 
   const keyword = searchParams.get('keyword') || '';
 
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState(['없음']);
   useEffect(()=>{
-    if (!tags || tags.length === 0) return;
+    if (!tags || tags.length === 0) {
+      return;
+    }
 
     setSelectedTags([...tags, "없음"]);}
     ,[tags])

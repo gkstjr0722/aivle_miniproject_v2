@@ -73,7 +73,7 @@ function ReviewItem({ review, bookTitle, onLike, onEdit, onDelete }) {
 
         <div className="review-actions">
           <button className="like-btn" onClick={()=>{ onLike(review.id) }}>
-            👍 {review.likes}
+            ❤️ {review.likes}
           </button>
           <button className="sub-button" onClick={()=>{setIsEditing(true)}}>
             수정
