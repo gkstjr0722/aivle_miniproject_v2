@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Getter @Setter
@@ -15,7 +17,7 @@ public class Book {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;          // 나중에 fk지정
+//    private Long userId;          // 나중에 fk지정
 
     @NotBlank
     @Column(nullable = false)
@@ -35,7 +37,11 @@ public class Book {
     private Integer likes;
 
     private LocalDateTime createdAt;
+
     private LocalDateTime updatedAt;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> tags = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {
