@@ -23,10 +23,6 @@ public class Review {
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    // 리뷰 작성자
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
     @Lob
     @Column(columnDefinition = "TEXT", nullable = false)
