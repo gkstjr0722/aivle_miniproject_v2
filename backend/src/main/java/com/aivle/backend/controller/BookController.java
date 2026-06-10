@@ -36,6 +36,11 @@ public class BookController {
         return bookService.updateBook(id, book);
     }
 
+    @PatchMapping("/{id}/likes")
+    public Book likeBook(@PathVariable Long id) {
+        return bookService.likeBook(id);
+    }
+
     @PatchMapping("/{id}/cover")
     public Book updateCover(@PathVariable Long id, @RequestBody Book book) {
         return bookService.updateCover(id, book.getCoverImageUrl());

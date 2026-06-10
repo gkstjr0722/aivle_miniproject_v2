@@ -57,4 +57,11 @@ public class BookService {
         book.setUpdatedAt(LocalDateTime.now());
         return bookRepository.save(book);
     }
+
+    // 좋아요 버튼
+    public Book likeBook(Long id) {
+        Book book = getBook(id);
+        book.setLikes(book.getLikes() + 1);
+        return bookRepository.save(book);
+    }
 }

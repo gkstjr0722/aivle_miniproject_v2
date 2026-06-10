@@ -67,18 +67,25 @@ function App() {
 
   const handleBookLikes = async (id) => {
     try {
-      const book = books.find((b) => String(b.id) === String(id));
-      const res = await fetch(`http://localhost:8080/books/${id}`, {
+      // const book = books.find((b) => String(b.id) === String(id)); 
+      const res = await fetch(`http://localhost:8080/books/${id}/likes`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ likes: book.likes + 1 }),
+        // headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({ likes: book.likes + 1 }),
       });
   
-      const updated = await res.json();
-      setBooks(books.map((b) => (String(b.id) === String(id) ? updated : b)));
+      if (!res.ok) {
+        throw new Error('좋아요 실패');
+      }
+
+      const updatedBook = await res.json();
+      setBooks((prevBooks) =>
+        prevBooks.map((b) => 
+          String(b.id) === String(id) ? updatedBook : b));
     } catch (err) {
       console.error(err);
     }
+
   };
   const handleReviewEdit = async(id, edited) =>{
     try {
