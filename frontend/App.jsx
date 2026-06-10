@@ -16,8 +16,8 @@ function App() {
   useEffect(() => {
     async function loadData() {
       try {
-        const booksRes = await fetch('http://localhost:3000/books');
-        const reviewsRes = await fetch('http://localhost:3000/reviews');
+        const booksRes = await fetch('http://localhost:8080/books');
+        const reviewsRes = await fetch('http://localhost:8080/reviews');
         const res1 = await booksRes.json()
         setBooks(res1);
         const res2 = await reviewsRes.json()
@@ -42,7 +42,7 @@ function App() {
 
     //  create 관련 함수 
   const handleCreateBook = async (newBook) => {
-    const res = await fetch('http://localhost:3000/books', {
+    const res = await fetch('http://localhost:8080/books', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newBook),
@@ -56,7 +56,7 @@ function App() {
   const handleReviewLike = async (id) => {
     const review = reviews.find( r => r.id ===id);
 
-    const res = await fetch(`http://localhost:3000/reviews/${id}`, {
+    const res = await fetch(`http://localhost:8080/reviews/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ likes: review.likes + 1 }),
@@ -68,7 +68,7 @@ function App() {
   const handleBookLikes = async (id) => {
     try {
       const book = books.find((b) => String(b.id) === String(id));
-      const res = await fetch(`http://localhost:3000/books/${id}`, {
+      const res = await fetch(`http://localhost:8080/books/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ likes: book.likes + 1 }),
@@ -82,7 +82,7 @@ function App() {
   };
   const handleReviewEdit = async(id, edited) =>{
     try {
-        const res = await fetch (`http://localhost:3000/reviews/${id}`,
+        const res = await fetch (`http://localhost:8080/reviews/${id}`,
           {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
@@ -100,7 +100,7 @@ function App() {
   
   const handleBookEdit = async(id, edited) =>{
     try {
-        const res = await fetch (`http://localhost:3000/books/${id}`,
+        const res = await fetch (`http://localhost:8080/books/${id}`,
           {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
@@ -117,7 +117,7 @@ function App() {
 
   const handleBookDelete = async(id) =>{
     try {
-      await fetch (`http://localhost:3000/books/${id}`,
+      await fetch (`http://localhost:8080/books/${id}`,
         {method: 'DELETE'}
       );
       setBooks (books.filter(b => String(b.id) !== String(id)));
@@ -130,7 +130,7 @@ function App() {
 
   const handleReviewDelete = async(id) =>{
     try {
-        await fetch (`http://localhost:3000/reviews/${id}`,
+        await fetch (`http://localhost:8080/reviews/${id}`,
         {method: 'DELETE'}
       );
       setReviews(reviews.filter(r => r.id !==id ));
