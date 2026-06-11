@@ -490,9 +490,9 @@ React Frontend와 Spring Boot Backend를 연동하여 도서 등록, 조회, 수
 | ![리뷰 삭제 전](<./screenshots/E2E 시연 흐름/9-2. 리뷰 삭제 전.png>) | ![리뷰 삭제 후](<./screenshots/E2E 시연 흐름/9-2.리뷰 삭제 후.png>) |
 
 ### 10. 도서 삭제
-| 삭제 확인 알림 | 삭제 대상 도서 |
+| 삭제 대상 도서 | 삭제 확인 알림 |
 |---|---|
-| ![삭제 알림](<./screenshots/E2E 시연 흐름/10. 도서 삭제 알림.png>) | ![삭제 전 도서](<./screenshots/E2E 시연 흐름/10. 도서삭제 전 도서.png>) |
+| ![삭제 전 도서](<./screenshots/E2E 시연 흐름/10. 도서삭제 전 도서.png>) | ![삭제 알림](<./screenshots/E2E 시연 흐름/10. 도서 삭제 알림.png>) |
 
 ---
 
