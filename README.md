@@ -424,17 +424,25 @@ React Frontend와 Spring Boot Backend를 연동하여 도서 등록, 조회, 수
 ## 15. Postman 및 H2 테스트
 ### CRUD
 1. 생성
-
+![도서 등록](./screenshots/Postman도서등록.png)
 
 2. 읽기
+![도서 조회](./screenshots/H2도서조회.png)
 
 3. 수정
+![도서 수정](./screenshots/Postman도서수정.png)
 
 4. 삭제
+![도서 삭제](./screenshots/Postman도서삭제.png)
+![도서 삭제 확인](./screenshots/Postman도서삭제확인.png)
 
 ### ERROR 확인
 1. 404
+![도서404](./screenshots/Postman도서404에러.png)
+
 2. 400
+![작가400](./screenshots/Postman도서작가400에러.png)
+![제목400](./screenshots/Postman도서제목400에러.png)
 
 ---
 
@@ -444,6 +452,7 @@ React Frontend와 Spring Boot Backend를 연동하여 도서 등록, 조회, 수
 ![홈 화면](./screenshots/홈화면.png)
 
 2. 도서 등록
+
 
 3. 등록된 도서 목록 확인
 
