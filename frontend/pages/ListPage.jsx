@@ -79,30 +79,21 @@ function ListPage({ books, tags }) {
           좋아요순
         </button>
 
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
-        {['전체',...tags].map((t) => {
-          const isSelected = selectedTag === t;
-          return (
-            <span
-              key={t}
-              onClick={() => handleTagClick(t)}
-              style={{
-                cursor: 'pointer',
-                padding: '4px 8px',
-                borderRadius: '4px',
-                // 🔥 On/Off 상태에 따라 스타일 변화 (예: 선택되면 파란색/굵게)
-                backgroundColor: isSelected ? '#007bff' : '#f0f0f0',
-                color: isSelected ? '#fff' : '#333',
-                fontWeight: isSelected ? 'bold' : 'normal',
-                transition: 'all 0.2s',
-              }}
-            >
-              #{t}
-            </span>
-          );
-        })}
-  
-      </div>
+        <div className="tag-container">
+          {['전체', ...tags].map((t) => {
+            const isSelected = selectedTag === t;
+
+            return (
+              <button
+                key={t}
+                onClick={() => handleTagClick(t)}
+                className={`tag-button ${isSelected ? 'active' : ''}`}
+              >
+                #{t}
+              </button>
+            );
+          })}
+        </div>
       </div>
       <div className="book-list">
 
