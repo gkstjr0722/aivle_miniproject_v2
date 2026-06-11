@@ -1,240 +1,355 @@
-# 5차 미니 프로젝트 - 도서관리시스템 서버 개발
+# AI 기반 도서관리시스템
 
-React, Spring Boot, OpenAI 이미지 생성 API를 활용한 도서 관리 웹 서비스입니다.
+## 1. 프로젝트 개요
 
-사용자는 도서 목록을 조회하고, 새 도서를 등록하거나 기존 도서를 수정할 수 있습니다. 또한 도서 내용 기반으로 AI 표지를 생성할 수 있으며, 도서별 리뷰 작성, 좋아요, 수정, 삭제 기능을 사용할 수 있습니다.
+본 프로젝트는 기존 Frontend 미니프로젝트에서 사용하던 `json-server` 기반 데이터 관리를 Spring Boot 서버로 전환한 도서관리시스템이다.
 
----
+사용자는 도서를 등록, 조회, 수정, 삭제할 수 있으며, 도서에 대한 리뷰를 작성하고 관리할 수 있다. 또한 도서 제목과 내용을 기반으로 OpenAI Image Generation API를 호출하여 AI 표지 이미지를 생성하고, 생성된 이미지를 Backend에 저장하여 도서 목록 및 상세 화면에 반영할 수 있다.
 
-## 프로젝트 주요 기능
+본 프로젝트의 핵심 목표는 다음과 같다.
 
-### 도서 기능
-
-- 도서 목록 조회
-- 도서 상세 조회
-- 새 도서 등록
-- 도서 수정
-- 도서 삭제
-- 도서 좋아요
-- 최신순 / 이름순 / 좋아요순 정렬
-- 등록된 도서 검색 (도서명, 작가명, 내용, 태그)
-- 장르별 태그
-
-### 리뷰 기능
-
-- 도서별 리뷰 작성
-- 리뷰 목록 조회
-- 리뷰 수정
-- 리뷰 삭제
-- 리뷰 좋아요
-- 홈 화면에서 인기 리뷰 확인
-
-### AI 표지 생성 기능
-
-- OpenAI API Key 입력
-- 생성 모델 선택
-- 품질 선택
-- 도서 제목과 내용을 기반으로 AI 표지 생성
-- 생성된 표지를 도서 데이터의 `coverImageUrl`에 저장
+* Spring Boot 기반 REST API 서버 구현
+* JPA와 H2 Database를 활용한 도서 데이터 관리
+* React Frontend와 Spring Boot Backend 연동
+* 도서 CRUD 기능 구현
+* 리뷰 CRUD 기능 구현
+* 도서 좋아요 증가 기능 구현
+* OpenAI API를 활용한 AI 표지 이미지 생성 및 저장
+* 전역 예외 처리와 유효성 검증 적용
+* GitHub 기반 팀 협업 및 최종 시연
 
 ---
 
-## 페이지 구성
+## 2. 팀원 R&R
 
-### 1. 홈 페이지
-
-- 월간 인기 도서 표시
-- 인기 리뷰 표시
-- 도서 또는 리뷰 클릭 시 상세 페이지로 이동
-- 등록된 도서 검색
-
-### 2. 도서 목록 페이지
-
-- 전체 도서 목록 표시
-- 최신순, 이름순, 좋아요순 정렬
-- 도서별 자세히 보기 버튼 제공
-- 장르별로 필터링하여 조회
-
-### 3. 새 도서 등록 페이지
-
-- 도서명 입력
-- 작가 입력
-- 태그 입력
-- 책 내용 입력
-- OpenAI API Key 입력
-- AI 표지 생성
-- 도서 등록
-
-### 4. 책 자세히 보기 페이지
-
-- 책 표지 이미지 표시
-- 책 제목, 내용, 생성일 표시
-- 도서 좋아요 기능
-- 도서 수정 기능
-- 도서 삭제 기능
-- 해당 도서에 대한 리뷰 목록 표시
-- 리뷰 작성, 수정, 삭제, 좋아요 기능 제공
+| 이름 | 역할          | 담당 내용 | 주요 결과 |
+| -- | ----------- | ----- | ----- |
+| 이은선 | PM / 문서화    | API 정의서, README.md 작성, 프로젝트 총괄 점검              |
+| 한준우 | Backend 개발  | Entity 작성, Repository 관리, H2ㅗㄴ솔, Lombok 적용         |
+| 서한석 | Backend 개발  | Service 클래스, 비즈니스 로직, 예외 처리, @Transactional       |
+| 최준석 | Backend 개발  | Controller 관리, CRUD 엔드포인트 점검, @Valid+@NotBlank, Postman 테스트 |
+| 조은진 | AI/Frontend 연동 | Frontend 코드 분석 및 연동, OpenAI 표지 흐름, E2E 시연      |
+| 양경동 | 통합 / 예외처리  | WebConfig(CORS), 전역 예외 처리, 풀스택 디버깅, 트러블슈팅 |
 
 ---
 
-## 기술 스택
+## 3. 주요 기능
 
-### Frontend
+### 3.1 도서 관리 기능
 
-- React
-- Vite
-- React Router DOM
-- JavaScript
-- CSS
+* 도서 목록 조회
+* 도서 상세 조회
+* 신규 도서 등록
+* 도서 정보 수정
+* 도서 좋아요 증가
+* 도서 삭제
+* AI 생성 표지 이미지 저장
 
-### Backend
+### 3.2 리뷰 관리 기능
 
-- Spring Boot
-- Java
-- Gradle
-- H2 Database (파일 모드, `backend/data/bookdb.mv.db`)
+* 전체 리뷰 조회
+* 특정 도서의 리뷰 조회
+* 리뷰 등록
+* 리뷰 수정
+* 리뷰 삭제
 
-### 외부 API
+### 3.3 AI 표지 이미지 생성 기능
 
-- OpenAI Image Generation API (`gpt-image-2`)
+* 도서 제목과 내용을 기반으로 이미지 생성 프롬프트 구성
+* Frontend에서 OpenAI Image Generation API 직접 호출
+* OpenAI 응답의 `b64_json` 값을 Data URL 형식으로 변환
+* 변환된 표지 이미지를 Backend의 도서 표지 저장 API로 전달
+* 저장된 표지를 도서 목록 및 상세 화면에 반영
 
 ---
 
-## 설치 및 실행 방법
+## 4. 기술 스택
 
-### 1. 프로젝트 클론
+| 구분       | 기술                                             |
+| -------- | ---------------------------------------------- |
+| Frontend | React 19, Vite, JavaScript, fetch API          |
+| Backend  | Java, Spring Boot, Spring MVC, Spring Data JPA |
+| Database | H2 Database                                    |
+| ORM      | JPA, Hibernate                                 |
+| Library  | Lombok, Validation                             |
+| AI API   | OpenAI Image Generation API                    |
+| 협업       | GitHub                                         |
+| API 테스트  | Postman                                        |
+| 개발 환경    | IntelliJ IDEA, VS Code                         |
 
-```bash
-git clone https://github.com/your-repo/project.git
-cd project
+---
+
+## 5. 시스템 구성
+
+```txt
+React Frontend
+    |
+    | HTTP Request
+    v
+Spring Boot Backend
+    |
+    | JPA
+    v
+H2 Database
 ```
 
-### 2. 백엔드 실행
+AI 표지 생성 흐름은 다음과 같다.
 
-Spring Boot 서버를 실행합니다.
+```txt
+React
+  → OpenAI API 호출
+  → b64_json 응답 수신
+  → Data URL 변환
+  → Spring Boot Backend로 표지 저장 요청
+  → H2 Database에 coverImageUrl 저장
+```
+
+---
+
+## 6. 프로젝트 구조
+
+```txt
+aivle_miniproject_v2
+├─ backend
+│  ├─ src
+│  │  └─ main
+│  │     ├─ java
+│  │     │  └─ com
+│  │     │     └─ aivle
+│  │     │        └─ backend
+│  │     │           ├─ config
+│  │     │           ├─ controller
+│  │     │           ├─ entity
+│  │     │           ├─ exception
+│  │     │           ├─ repository
+│  │     │           └─ service
+│  │     └─ resources
+│  │        └─ application.yaml
+│  ├─ build.gradle
+│  └─ settings.gradle
+│
+├─ frontend
+│  ├─ components
+│  ├─ public
+│  ├─ src
+│  ├─ package.json
+│  └─ vite.config.js
+│
+├─ screenshots
+├─ API정의서.md
+├─ README.md
+├─ db.json
+└─ server.cjs
+```
+
+---
+
+## 7. Backend 주요 구조
+
+### 7.1 Entity
+
+#### Book
+
+도서 정보를 저장하는 엔티티이다.
+
+| 필드명             | 설명                     |
+| --------------- | ---------------------- |
+| `id`            | 도서 ID                  |
+| `title`         | 도서 제목                  |
+| `author`        | 작가명                    |
+| `content`       | 도서 내용                  |
+| `coverImageUrl` | 표지 이미지 URL 또는 Data URL |
+| `likes`         | 좋아요 수                  |
+| `createdAt`     | 생성 시각                  |
+| `updatedAt`     | 수정 시각                  |
+
+#### Review
+
+도서 리뷰 정보를 저장하는 엔티티이다.
+
+| 필드명         | 설명            |
+| ----------- | ------------- |
+| `id`        | 리뷰 ID         |
+| `bookId`    | 리뷰가 연결된 도서 ID |
+| `nickname`  | 리뷰 작성자 닉네임    |
+| `content`   | 리뷰 내용         |
+| `likes`     | 리뷰 좋아요 수      |
+| `createdAt` | 생성 시각         |
+| `updatedAt` | 수정 시각         |
+
+---
+
+## 8. API 요약
+
+자세한 요청/응답 구조는 `API정의서.md`를 참고한다.
+
+### 8.1 Books API
+
+| 기능           | Method | URL                 |
+| ------------ | ------ | ------------------- |
+| 도서 목록 조회     | GET    | `/books`            |
+| 도서 상세 조회     | GET    | `/books/{id}`       |
+| 도서 등록        | POST   | `/books`            |
+| 도서 수정        | PATCH  | `/books/{id}`       |
+| AI 표지 이미지 저장 | PATCH  | `/books/{id}/cover` |
+| 도서 좋아요 증가    | PATCH  | `/books/{id}/like`  |
+| 도서 삭제        | DELETE | `/books/{id}`       |
+
+### 8.2 Reviews API
+
+| 기능          | Method | URL                        |
+| ----------- | ------ | -------------------------- |
+| 리뷰 전체 조회    | GET    | `/reviews`                 |
+| 특정 도서 리뷰 조회 | GET    | `/reviews?bookId={bookId}` |
+| 리뷰 등록       | POST   | `/reviews`                 |
+| 리뷰 수정       | PATCH  | `/reviews/{id}`            |
+| 리뷰 삭제       | DELETE | `/reviews/{id}`            |
+
+---
+
+## 9. 실행 방법
+
+## 9.1 Backend 실행
+
+### 1. Backend 폴더로 이동
 
 ```bash
 cd backend
-./gradlew bootRun
 ```
 
-Windows 환경에서는 아래 명령어를 사용합니다.
+### 2. Spring Boot 서버 실행
+
+Windows 환경:
 
 ```bash
 gradlew.bat bootRun
 ```
 
-백엔드 서버는 아래 주소에서 실행됩니다.
-
-```
-http://localhost:8080
-```
-
-> 데이터는 `backend/data/bookdb.mv.db` (H2 파일 DB)에 저장됩니다.
-> 초기 데이터가 필요한 경우 `backend/src/main/resources/db.json`을 참고하세요.
-
-### 3. 프론트엔드 패키지 설치
-
-루트 디렉토리에서 아래 명령어를 실행합니다.
-
-```bash
-npm install
-```
-
-### 4. React 개발 서버 실행
-
-```bash
-npm run dev
-```
-
-브라우저에서 안내되는 로컬 주소로 접속합니다.
-
-```
-http://localhost:5173
-```
-
----
-
-## 사용 가능한 명령어
-
-### Frontend (루트 디렉토리에서 실행)
-
-```bash
-npm run dev
-```
-
-React 개발 서버를 실행합니다.
-
-```bash
-npm run build
-```
-
-배포용 파일을 생성합니다.
-
-```bash
-npm run lint
-```
-
-코드 문법 및 스타일 오류를 검사합니다.
-
-```bash
-npm run preview
-```
-
-빌드 결과를 로컬에서 미리 확인합니다.
-
-### Backend (`backend` 디렉토리에서 실행)
+Mac 또는 Linux 환경:
 
 ```bash
 ./gradlew bootRun
 ```
 
-Spring Boot 서버를 실행합니다.
+### 3. Backend 서버 접속 주소
 
-```bash
-./gradlew build
+```txt
+http://localhost:8080
 ```
 
-백엔드 빌드 파일을 생성합니다.
+### 4. H2 Console 접속
+
+```txt
+http://localhost:8080/h2-console
+```
+
+H2 접속 정보:
+
+```txt
+JDBC URL: jdbc:h2:mem:bookdb
+User Name: sa
+Password:
+```
 
 ---
 
-## 데이터 구조
+## 9.2 Frontend 실행
 
-### Book
+### 1. Frontend 폴더로 이동
 
-| 필드명 | 타입 | 설명 |
-|---|---|---|
-| `id` | Long | 도서 고유 ID |
-| `title` | String | 도서명 |
-| `author` | String | 작가 |
-| `tag` | Array | 도서 카테고리 태그 |
-| `likes` | Number | 도서 좋아요 수 |
-| `content` | String | 도서 내용 또는 요약 |
-| `coverImageUrl` | String | 도서 표지 이미지 URL 또는 Data URL |
-| `createdAt` | String | 도서 등록 시간 |
-| `updatedAt` | String | 도서 수정 시간 |
+```bash
+cd frontend
+```
 
-### Review
+### 2. 패키지 설치
 
-| 필드명 | 타입 | 설명 |
-|---|---|---|
-| `id` | Long | 리뷰 고유 ID |
-| `bookId` | Long | 리뷰가 연결된 도서 ID |
-| `bookTitle` | String | 리뷰가 연결된 도서명 |
-| `nickname` | String | 리뷰 작성자 닉네임 |
-| `content` | String | 리뷰 내용 |
-| `likes` | Number | 리뷰 좋아요 수 |
-| `createdAt` | String | 리뷰 등록 시간 |
-| `updatedAt` | String | 리뷰 수정 시간 |
+```bash
+npm install
+```
+
+### 3. 개발 서버 실행
+
+```bash
+npm run dev
+```
+
+### 4. Frontend 접속 주소
+
+```txt
+http://localhost:5173
+```
 
 ---
 
-## API 명세
+## 10. 시연 테스트 시나리오
 
-기본 URL: `http://localhost:8080`
+## 10.1 도서 CRUD 테스트
 
-### 공통 오류 응답
+| 순서 | 테스트 항목    | 확인 내용                                       |
+| -: | --------- | ------------------------------------------- |
+|  1 | 도서 목록 조회  | 메인 화면에서 등록된 도서 목록이 표시되는지 확인                 |
+|  2 | 도서 등록     | 제목, 작가명, 본문 입력 후 새 도서가 목록에 추가되는지 확인         |
+|  3 | 도서 상세 조회  | 선택한 도서의 제목, 작가명, 본문, 표지, 작성일, 수정일이 표시되는지 확인 |
+|  4 | 도서 수정     | 수정한 도서 정보가 상세 화면과 목록 화면에 반영되는지 확인           |
+|  5 | 도서 좋아요 증가 | 좋아요 버튼 클릭 시 좋아요 수가 증가하는지 확인                 |
+|  6 | 도서 삭제     | 삭제 후 목록에서 해당 도서가 제거되는지 확인                   |
+
+---
+
+## 10.2 리뷰 CRUD 테스트
+
+| 순서 | 테스트 항목 | 확인 내용                                |
+| -: | ------ | ------------------------------------ |
+|  1 | 리뷰 등록  | 닉네임과 리뷰 내용을 입력하면 리뷰가 등록되는지 확인        |
+|  2 | 리뷰 조회  | 특정 도서 상세 화면에서 해당 도서의 리뷰 목록이 조회되는지 확인 |
+|  3 | 리뷰 수정  | 수정한 리뷰 내용이 화면에 반영되는지 확인              |
+|  4 | 리뷰 삭제  | 삭제 후 리뷰 목록에서 해당 리뷰가 제거되는지 확인         |
+
+---
+
+## 10.3 AI 표지 생성 테스트
+
+| 순서 | 테스트 항목            | 확인 내용                                   |
+| -: | ----------------- | --------------------------------------- |
+|  1 | OpenAI API Key 입력 | 사용자의 OpenAI API Key를 입력한다               |
+|  2 | 표지 생성 요청          | 도서 제목과 내용을 기반으로 이미지 생성 요청을 보낸다          |
+|  3 | 이미지 응답 처리         | OpenAI 응답의 `b64_json` 값을 Data URL로 변환한다 |
+|  4 | 표지 저장             | 변환된 Data URL을 Backend에 저장한다             |
+|  5 | 화면 반영             | 생성된 표지가 도서 상세 화면과 목록 화면에 표시되는지 확인한다     |
+
+---
+
+## 11. Postman 테스트 항목
+
+### 11.1 Books API
+
+| 기능        | Method | URL                                      | 주요 Body                                       |
+| --------- | ------ | ---------------------------------------- | --------------------------------------------- |
+| 도서 등록     | POST   | `http://localhost:8080/books`            | `title`, `author`, `content`, `coverImageUrl` |
+| 도서 목록 조회  | GET    | `http://localhost:8080/books`            | 없음                                            |
+| 도서 상세 조회  | GET    | `http://localhost:8080/books/{id}`       | 없음                                            |
+| 도서 수정     | PATCH  | `http://localhost:8080/books/{id}`       | 수정할 필드                                        |
+| AI 표지 저장  | PATCH  | `http://localhost:8080/books/{id}/cover` | `coverImageUrl`                               |
+| 도서 좋아요 증가 | PATCH  | `http://localhost:8080/books/{id}/like`  | 없음                                            |
+| 도서 삭제     | DELETE | `http://localhost:8080/books/{id}`       | 없음                                            |
+
+### 11.2 Reviews API
+
+| 기능          | Method | URL                                             | 주요 Body                         |
+| ----------- | ------ | ----------------------------------------------- | ------------------------------- |
+| 리뷰 등록       | POST   | `http://localhost:8080/reviews`                 | `bookId`, `nickname`, `content` |
+| 전체 리뷰 조회    | GET    | `http://localhost:8080/reviews`                 | 없음                              |
+| 특정 도서 리뷰 조회 | GET    | `http://localhost:8080/reviews?bookId={bookId}` | 없음                              |
+| 리뷰 수정       | PATCH  | `http://localhost:8080/reviews/{id}`            | 수정할 필드                          |
+| 리뷰 삭제       | DELETE | `http://localhost:8080/reviews/{id}`            | 없음                              |
+
+---
+
+## 12. 예외 처리
+
+본 프로젝트는 전역 예외 처리를 통해 API 오류 응답 형식을 통일하였다.
+
+### 12.1 도서 또는 리뷰를 찾을 수 없는 경우
 
 ```json
 {
@@ -246,160 +361,88 @@ Spring Boot 서버를 실행합니다.
 }
 ```
 
-### 도서 API
+### 12.2 유효성 검증 실패
 
-| 기능 | Method | URL |
-|---|---|---|
-| 도서 목록 조회 | GET | `/books` |
-| 도서 상세 조회 | GET | `/books/{id}` |
-| 도서 등록 | POST | `/books` |
-| 도서 수정 | PATCH | `/books/{id}` |
-| AI 표지 이미지 저장 | PATCH | `/books/{id}/cover` |
-| 도서 좋아요 증가 | PATCH | `/books/{id}/like` |
-| 도서 삭제 | DELETE | `/books/{id}` |
-
-#### 도서 목록 조회 Query Parameter
-
-| 이름 | 타입 | 필수 여부 | 설명 |
-|---|---|---|---|
-| `keyword` | String | 선택 | 도서명, 작가명, 내용, 태그 검색어 |
-| `sort` | String | 선택 | 정렬 기준. `latest`, `likes`, `title` |
-
-### 리뷰 API
-
-| 기능 | Method | URL |
-|---|---|---|
-| 리뷰 전체 조회 | GET | `/reviews` |
-| 특정 도서 리뷰 조회 | GET | `/reviews?bookId={bookId}` |
-| 리뷰 등록 | POST | `/books/{bookId}/reviews` |
-| 리뷰 등록 (호환) | POST | `/reviews` |
-| 리뷰 수정 | PATCH | `/reviews/{id}` |
-| 리뷰 좋아요 증가 | PATCH | `/reviews/{id}/like` |
-| 리뷰 삭제 | DELETE | `/reviews/{id}` |
-
----
-
-## 라우팅 구조
-
-| 페이지 | 경로 | 설명 |
-|---|---|---|
-| 홈 | `/` | 인기 도서와 인기 리뷰를 보여주는 페이지 |
-| 도서 목록 | `/list` | 전체 도서 목록을 보여주는 페이지 |
-| 새 도서 등록 | `/create` | 새 도서를 등록하는 페이지 |
-| 책 자세히 보기 | `/detail/:id` | 특정 도서의 상세 정보와 리뷰를 보여주는 페이지 |
-
----
-
-## 폴더 구조
-
-```
-AIVLE_MINIPROJECT_V2
-├─ package.json
-│
-├─ backend
-│  ├─ data
-│  │  └─ bookdb.mv.db          # H2 파일 DB (런타임 생성)
-│  ├─ src
-│  │  └─ main
-│  │     ├─ java               # Spring Boot 소스코드
-│  │     └─ resources
-│  │        ├─ application.yaml
-│  │        └─ db.json         # 초기 데이터
-│  ├─ build.gradle
-│  ├─ gradlew
-│  ├─ gradlew.bat
-│  └─ settings.gradle
-│
-├─ frontend
-│  ├─ assets
-│  ├─ components
-│  │  ├─ BookHomeItem.jsx
-│  │  ├─ BookHomeList.jsx
-│  │  ├─ Create.jsx
-│  │  ├─ BookReportDetailItem.jsx
-│  │  ├─ BookReportDetailList.jsx
-│  │  ├─ BookReportHomeItem.jsx
-│  │  ├─ BookReportHomeList.jsx
-│  │  ├─ BookDetailEdit.jsx
-│  │  ├─ api.js
-│  │  └─ utils.js
-│  ├─ pages
-│  │  ├─ HomePage.jsx
-│  │  ├─ ListPage.jsx
-│  │  ├─ CreatePage.jsx
-│  │  ├─ ReviewListPage.jsx
-│  │  └─ DetailPage.jsx
-│  ├─ public
-│  ├─ App.css
-│  ├─ App.jsx
-│  ├─ main.jsx
-│  └─ index.html
-│
-└─ README.md
+```json
+{
+  "status": 400,
+  "error": "BAD_REQUEST",
+  "message": "도서명은 필수입니다.",
+  "path": "/books",
+  "timestamp": "2026-05-22T10:00:00"
+}
 ```
 
 ---
 
-## OpenAI 표지 생성 기능
+## 13. 트러블슈팅
 
-새 도서 등록 페이지에서 사용자가 입력한 도서 제목과 책 내용을 바탕으로 OpenAI 이미지 생성 API를 호출합니다.
-
-### 동작 흐름
-
-1. 사용자가 도서명, 작가, 태그, 책 내용을 입력합니다.
-2. OpenAI API Key를 입력합니다.
-3. 생성 모델과 품질을 선택합니다.
-4. 표지 생성 버튼을 클릭합니다.
-5. Frontend에서 직접 OpenAI API로 이미지 생성 요청을 보냅니다.
-6. 응답으로 받은 `b64_json`을 `data:image/png;base64,...` 형식의 Data URL로 변환합니다.
-7. 변환한 Data URL을 `PATCH /books/{id}/cover`로 Spring Boot 서버에 전달하여 저장합니다.
-8. 등록된 도서는 목록 페이지와 상세 페이지에서 확인할 수 있습니다.
-
-### API Key 관련 주의사항
-
-OpenAI API Key는 코드나 서버에 저장하지 않습니다.
-보안을 위해 사용자가 화면에서 직접 입력하도록 구현했습니다.
+| 문제 상황                                   | 원인                                               | 해결 방법                                                |
+| --------------------------------------- | ------------------------------------------------ | ---------------------------------------------------- |
+| React에서 Spring Boot API 호출 시 CORS 오류 발생 | Frontend와 Backend의 포트가 달라 브라우저 보안 정책에 의해 요청 차단   | `WebConfig.java`에서 `http://localhost:5173` Origin 허용 |
+| Frontend 요청이 json-server로 전송됨           | 기존 Frontend 코드의 API 주소가 `localhost:3000`으로 남아 있음 | API 요청 주소를 `http://localhost:8080`으로 수정              |
+| H2 Console 접속 실패                        | JDBC URL 또는 서버 실행 상태 문제                          | Spring Boot 실행 여부 확인 후 H2 접속 정보 확인                   |
+| 도서 상세 조회 시 404 발생                       | 존재하지 않는 도서 ID 요청                                 | 사용자 정의 예외와 전역 예외 처리로 404 응답 반환                       |
+| 필수 입력값 없이 등록 시 오류 발생                    | 제목, 작가명, 본문 내용 등 필수값 누락                          | 검증 어노테이션과 전역 예외 처리로 400 응답 반환                        |
+| OpenAI 이미지 생성 실패                        | API Key 미입력 또는 잘못된 Key 사용                        | 사용자의 OpenAI API Key를 입력하고 Authorization 헤더 형식 확인     |
+| GitHub에 API Key가 올라갈 위험                 | API Key를 코드에 하드코딩할 경우 보안 문제 발생                   | API Key는 사용자가 화면에서 직접 입력하고 코드에는 저장하지 않음              |
+| 표지 이미지가 화면에 바로 반영되지 않음                  | Backend 저장 후 Frontend 상태 갱신 누락                   | 표지 저장 API 호출 후 도서 상세 정보를 다시 조회하거나 상태값 갱신             |
 
 ---
 
-## 주요 화면
+## 14. 주요 구현 결과
 
-### 홈 화면
+### 14.1 json-server에서 Spring Boot로 전환
 
-![홈 화면](./screenshots/home.jpeg)
+기존 Frontend 미니프로젝트에서 사용하던 `json-server` 기반 임시 API를 Spring Boot Backend로 대체하였다. 이를 통해 도서 데이터가 JPA와 H2 Database를 통해 관리되도록 구현하였다.
 
-### 도서 목록 화면
+### 14.2 도서 CRUD 기능 구현
 
-![도서 목록 화면](./screenshots/list.jpeg)
+도서 목록 조회, 상세 조회, 등록, 수정, 삭제 기능을 REST API로 구현하였다. Frontend에서는 fetch API를 통해 Backend와 통신하며, 사용자의 입력 결과가 화면과 데이터베이스에 반영되도록 구성하였다.
 
-### 리뷰 목록 화면
+### 14.3 도서 좋아요 증가 기능 구현
 
-![리뷰 목록 화면](./screenshots/review.png)
+도서 상세 또는 목록 화면에서 좋아요 요청을 보내면 Backend에서 해당 도서의 `likes` 값을 증가시키고, 변경된 결과가 화면에 반영되도록 구현하였다.
 
-### 새 도서 등록 화면
+### 14.4 리뷰 CRUD 기능 구현
 
-![새 도서 등록 화면](./screenshots/create.png)
+도서별 리뷰 작성 및 조회 기능을 구현하였다. 리뷰는 `bookId`를 기준으로 도서와 연결되며, 닉네임과 리뷰 내용을 저장할 수 있다.
 
-### 책 상세 화면
+### 14.5 AI 표지 이미지 생성 흐름 구현
 
-![책 상세 화면](./screenshots/detail.png)
+Frontend에서 OpenAI API를 직접 호출하여 도서 내용에 맞는 표지 이미지를 생성하였다. 생성된 이미지는 Data URL 형식으로 변환한 뒤 Backend에 저장되며, 도서 상세 화면과 목록 화면에서 확인할 수 있다.
 
----
+### 14.6 예외 처리 구조 적용
 
-## 프로젝트 사용 흐름
+도서 또는 리뷰를 찾을 수 없는 경우와 유효성 검증 실패 상황에 대해 전역 예외 처리 구조를 적용하였다. 이를 통해 API 오류 응답 형식을 일관되게 유지하였다.
 
-1. 홈 페이지에서 인기 도서와 인기 리뷰를 확인합니다.
-2. 도서 목록 페이지에서 전체 도서를 확인합니다.
-3. 자세히 보기 버튼을 눌러 책 상세 페이지로 이동합니다.
-4. 책 상세 페이지에서 좋아요를 누르거나 리뷰를 작성합니다.
-5. 새 도서 등록 페이지에서 도서 정보를 입력합니다.
-6. OpenAI API Key를 입력한 뒤 AI 표지를 생성합니다.
-7. 도서를 등록하면 Spring Boot 서버에 저장됩니다.
+### 14.7 Frontend-Backend 통합
+
+React Frontend와 Spring Boot Backend를 연동하여 도서 등록, 조회, 수정, 삭제, 좋아요 증가, 리뷰 관리, AI 표지 저장 흐름을 통합하였다. CORS 설정을 통해 `localhost:5173`에서 `localhost:8080`으로 API 요청이 가능하도록 처리하였다.
 
 ---
 
-## 프로젝트 목표
+## 15. E2E 시연 흐름
 
-이 프로젝트의 목표는 React의 컴포넌트 구조, 상태 관리, REST API 통신, Spring Boot 기반 백엔드 개발, OpenAI API 활용을 실습하는 것입니다.
+```txt
+1. Frontend 접속
+2. 도서 등록
+3. 등록된 도서 목록 확인
+4. 도서 상세 페이지 이동
+5. OpenAI API Key 입력
+6. AI 표지 이미지 생성
+7. 생성된 표지 저장 및 화면 반영
+8. 도서 좋아요 증가
+9. 리뷰 등록
+10. 도서 정보 수정
+11. 리뷰 수정 또는 삭제
+12. 도서 삭제
+```
 
-단순한 도서 CRUD 기능에서 나아가, AI 표지 생성과 리뷰 게시판 기능을 결합하여 사용자가 직접 도서를 등록하고 관리할 수 있는 풀스택 웹 서비스를 구현했습니다.
+---
+
+## 16. 프로젝트 의의
+
+본 프로젝트를 통해 단순한 정적 데이터 관리 방식에서 벗어나 Spring Boot 기반의 Backend API 서버를 직접 구현하였다. 또한 React와 Spring Boot의 통신 구조를 이해하고, JPA를 활용한 데이터 영속성 처리와 전역 예외 처리 구조를 적용하였다.
+
+AI 표지 생성 기능을 통해 외부 API를 실제 서비스 흐름에 연결하는 경험을 수행했으며, 도서 등록부터 AI 표지 생성, 저장, 화면 반영까지 이어지는 전체 E2E 흐름을 구현하였다.
