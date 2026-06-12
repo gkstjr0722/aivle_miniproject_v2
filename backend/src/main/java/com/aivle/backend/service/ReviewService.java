@@ -50,6 +50,10 @@ public class ReviewService {
         checkOwner(review, username);
         reviewRepository.delete(review);
     }
+    
+    public List<Review> getMyReviews(String username) {
+        return reviewRepository.findByCreatedBy(username);
+    }
 
     private Review getReview(Long id) {
         return reviewRepository.findById(id)

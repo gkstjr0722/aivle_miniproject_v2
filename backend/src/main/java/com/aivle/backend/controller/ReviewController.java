@@ -16,7 +16,12 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping
-    public List<Review> getReviews(@RequestParam(required = false) Long bookId) {
+    public List<Review> getReviews(
+            @RequestParam(required = false) Long bookId,
+            @RequestParam(required = false) String createdBy) {
+        if (createdBy != null) {
+            return reviewService.getMyReviews(createdBy);
+        }
         return reviewService.getReviews(bookId);
     }
 

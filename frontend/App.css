@@ -1795,3 +1795,142 @@ nav a[href="/signup"]:hover {
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+.mypage-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  color: #888;
+}
+
+.mypage-container {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.mypage-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+}
+
+.mypage-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #6c3ce1;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mypage-welcome {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.mypage-username {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.mypage-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.mypage-stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.mypage-stat-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #6c3ce1;
+}
+
+.mypage-stat-label {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.mypage-section {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.mypage-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+  text-align: left;
+}
+
+.mypage-empty {
+  color: #aaa;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.mypage-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mypage-list-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  text-align: left;
+}
+
+.mypage-list-item:last-child {
+  border-bottom: none;
+}
+
+.mypage-item-title {
+  display: block;
+  font-weight: 500;
+  color: #1a1a1a;
+  text-decoration: none;
+  margin-bottom: 4px;
+}
+
+.mypage-item-title:hover {
+  color: #6c3ce1;
+}
+
+.mypage-item-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: #888;
+}

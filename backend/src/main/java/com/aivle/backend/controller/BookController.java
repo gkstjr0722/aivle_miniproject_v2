@@ -19,7 +19,10 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<Book> getBooks() {
+    public List<Book> getBooks(@RequestParam(required = false) String createdBy) {
+        if (createdBy != null) {
+            return bookService.getMyBooks(createdBy);
+        }
         return bookService.getBooks();
     }
 

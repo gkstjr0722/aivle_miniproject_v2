@@ -245,9 +245,9 @@ http://localhost:8080/h2-console
 H2 접속 정보:
 
 ```txt
-JDBC URL: jdbc:h2:mem:bookdb
+JDBC URL: jdbc:h2:file:./data/bookdb
 User Name: sa
-Password:
+Password: 1234
 ```
 
 ---

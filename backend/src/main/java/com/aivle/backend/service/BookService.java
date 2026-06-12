@@ -67,6 +67,10 @@ public class BookService {
         book.setLikes(book.getLikes() + 1);
         return bookRepository.save(book);
     }
+ 
+    public List<Book> getMyBooks(String username) {
+    return bookRepository.findByCreatedBy(username);
+}
 
     private void checkOwner(Book book, String username) {
         if (book.getCreatedBy() == null) return;

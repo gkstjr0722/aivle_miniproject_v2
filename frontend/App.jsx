@@ -9,6 +9,7 @@ import DetailPage from './pages/DetailPage';
 import ReviewListPage from './pages/ReviewListPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import MyPage from './pages/MyPage';
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -169,16 +170,15 @@ function App() {
           <Link to="/list">도서목록</Link>
           <Link to="/reviews">리뷰목록</Link>
           <Link to="/create" className="add-book-btn">+ 새 도서 등록</Link>
-
           {currentUser ? (
             <>
-              <span className="nav-username">{currentUser}님</span>
+              <Link to="/mypage" className="nav-username">{currentUser}님</Link>
               <button className="nav-logout-btn" onClick={handleLogout}>로그아웃</button>
             </>
           ) : (
             <>
-              <Link to="/login" className="nav-logout-btn">로그인</Link>
-              <Link to="/signup" className="nav-logout-btn">회원가입</Link>
+              <Link to="/login" className="nav-pill-btn">로그인</Link>
+              <Link to="/signup" className="nav-pill-btn">회원가입</Link>
             </>
           )}
         </nav>
@@ -205,6 +205,7 @@ function App() {
           <Route path="/reviews" element={<ReviewListPage reviews={reviews} books={books} />} />
           <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
       </main>
     </div>
