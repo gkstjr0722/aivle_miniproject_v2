@@ -169,15 +169,16 @@ function App() {
           <Link to="/list">도서목록</Link>
           <Link to="/reviews">리뷰목록</Link>
           <Link to="/create" className="add-book-btn">+ 새 도서 등록</Link>
+
           {currentUser ? (
             <>
-              <span>{currentUser}님</span>
-              <button onClick={handleLogout}>로그아웃</button>
+              <span className="nav-username">{currentUser}님</span>
+              <button className="nav-logout-btn" onClick={handleLogout}>로그아웃</button>
             </>
           ) : (
             <>
-              <Link to="/login">로그인</Link>
-              <Link to="/signup">회원가입</Link>
+              <Link to="/login" className="nav-logout-btn">로그인</Link>
+              <Link to="/signup" className="nav-logout-btn">회원가입</Link>
             </>
           )}
         </nav>

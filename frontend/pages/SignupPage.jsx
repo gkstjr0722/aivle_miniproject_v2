@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -30,31 +29,37 @@ function SignupPage() {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '80px auto' }}>
-      <h2>회원가입</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>아이디</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">회원가입</button>
-      </form>
-      <p>이미 계정이 있으신가요? <Link to="/login">로그인</Link></p>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>회원가입</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="auth-field">
+            <label>아이디</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="아이디를 입력하세요"
+              required
+            />
+          </div>
+          <div className="auth-field">
+            <label>비밀번호</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호를 입력하세요"
+              required
+            />
+          </div>
+          {error && <p className="auth-error">{error}</p>}
+          <button type="submit" className="auth-submit-btn">회원가입</button>
+        </form>
+        <p className="auth-footer">
+          이미 계정이 있으신가요? <Link to="/login">로그인</Link>
+        </p>
+      </div>
     </div>
   );
 }

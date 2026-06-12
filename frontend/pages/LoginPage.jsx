@@ -31,31 +31,37 @@ function LoginPage({ onLogin }) {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '80px auto' }}>
-      <h2>로그인</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>아이디</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">로그인</button>
-      </form>
-      <p>계정이 없으신가요? <Link to="/signup">회원가입</Link></p>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>로그인</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="auth-field">
+            <label>아이디</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="아이디를 입력하세요"
+              required
+            />
+          </div>
+          <div className="auth-field">
+            <label>비밀번호</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호를 입력하세요"
+              required
+            />
+          </div>
+          {error && <p className="auth-error">{error}</p>}
+          <button type="submit" className="auth-submit-btn">로그인</button>
+        </form>
+        <p className="auth-footer">
+          계정이 없으신가요? <Link to="/signup">회원가입</Link>
+        </p>
+      </div>
     </div>
   );
 }
