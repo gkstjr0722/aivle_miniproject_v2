@@ -165,7 +165,6 @@ function DetailPage({
       <BookReportDetailList
         review={sortedReviews}
         book={book}
-        bookTitle={book.title}
         onCreate={onReviewAdd}
         onReviewLike={onReviewLike}
         onReviewEdit={onReviewEdit}

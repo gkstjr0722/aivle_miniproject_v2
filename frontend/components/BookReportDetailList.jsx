@@ -24,7 +24,6 @@ function BookReportDetailList({ book, review,  onCreate, onReviewLike, onReviewE
 
     const newReview = {
       bookId: book.id,
-      bookTitle: book.title,
       nickname: nickname.trim(),
       content: content.trim(),
       likes: 0,
@@ -71,7 +70,6 @@ function BookReportDetailList({ book, review,  onCreate, onReviewLike, onReviewE
       {review.map (p =>
       <ReviewItem key={p.id}
         review={p}
-        bookTitle={book.title}
         onLike={onReviewLike}
         onEdit={onReviewEdit}
         onDelete={onReviewDelete}

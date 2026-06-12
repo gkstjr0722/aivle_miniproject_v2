@@ -20,10 +20,6 @@ public class Review {
 
     private Long bookId;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "book_id", nullable = false)
-//    private Book book;
-
     @Column(nullable = false, length = 50)
     private String nickname;
 

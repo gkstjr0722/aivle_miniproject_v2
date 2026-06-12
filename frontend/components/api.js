@@ -1,5 +1,4 @@
 export const API_BASE_URL = "http://localhost:8080";
-export const OPENAI_IMAGE_API_URL = "https://api.openai.com/v1/images/generations";
 
 export async function request(path, options = {}) {
   const token = localStorage.getItem('token');

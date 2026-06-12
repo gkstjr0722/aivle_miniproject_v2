@@ -26,7 +26,6 @@ const deleteTag = (index) => {
 
 const addTag = () => {
   if (!newTag.trim()) return;
-  console.log(tags)
   setTags(prev => [...(prev || []), newTag.trim()]);
   setNewTag("");
 };
@@ -47,7 +46,6 @@ const addTag = () => {
       return;
     }
 
-    // 추가
     if (title.trim().length > 100) {
       alert('제목은 100자 이하로 입력하세요');
       return;
@@ -171,7 +169,6 @@ const addTag = () => {
       return;
     }
 
-    // 추가
     if (title.trim().length > 100) {
       alert('제목은 100자 이하로 입력하세요');
       return;
@@ -215,21 +212,17 @@ const addTag = () => {
       }
     );
 
-    console.log(res)
-
-    const data = await res.json(); 
+    const data = await res.json();
 
     const resultText = data.choices[0].message.content;
 
 
     const parsed = JSON.parse(resultText)['tags'];
 
-    console.log(parsed);
     setTags(parsed);
     }catch{
-      
+
     }finally {
-      console.log(tags)
       setGeneratingTag(false);
 
     }

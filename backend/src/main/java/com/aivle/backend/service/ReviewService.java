@@ -29,7 +29,7 @@ public class ReviewService {
         LocalDateTime now = LocalDateTime.now();
         if (review.getCreatedAt() == null) review.setCreatedAt(now);
         review.setUpdatedAt(now);
-        if (username != null) review.setCreatedBy(username);  // ← null 체크 추가
+        if (username != null) review.setCreatedBy(username);
         return reviewRepository.save(review);
     }
 

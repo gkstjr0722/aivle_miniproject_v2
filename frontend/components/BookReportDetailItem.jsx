@@ -1,7 +1,7 @@
 import { formatDate, getLatestDate, hslFromName } from "./utils.js";
 import { useState } from 'react';
 
-function ReviewItem({ review, bookTitle, onLike, onEdit, onDelete, currentUser }) {
+function ReviewItem({ review, onLike, onEdit, onDelete, currentUser }) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [nickname, setNickname] = useState(review.nickname);
