@@ -66,6 +66,24 @@ function App() {
       return savedBook;
   };
 
+<<<<<<< HEAD
+=======
+  const handleReviewLike = async (id) => {
+    const token = localStorage.getItem('token');
+    try {
+      const res = await fetch(`http://localhost:8080/reviews/${id}/likes`, {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error('좋아요 실패');
+      const updated = await res.json();
+      setReviews(reviews.map((r) => (r.id === id ? updated : r)));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+>>>>>>> 45bf0d6c7037582802b5eb2e4ffdaae5eee608d5
   const handleBookLikes = async (id) => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -77,6 +95,7 @@ function App() {
     const already = likedBooks.includes(String(id));
 
     try {
+<<<<<<< HEAD
       const book = books.find(b => String(b.id) === String(id));
       const res = await fetch(`http://localhost:8080/books/${id}/likes`, {
         method: 'PATCH',
@@ -85,6 +104,12 @@ function App() {
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ likes: already ? book.likes - 1 : book.likes + 1 }),
+=======
+      const token = localStorage.getItem('token');
+      const res = await fetch(`http://localhost:8080/books/${id}/likes`, {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${token}` },
+>>>>>>> 45bf0d6c7037582802b5eb2e4ffdaae5eee608d5
       });
       if (!res.ok) throw new Error('좋아요 실패');
       const updatedBook = await res.json();
