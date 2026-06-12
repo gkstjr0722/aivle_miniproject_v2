@@ -47,8 +47,8 @@ public class BookController {
     }
 
     @PatchMapping("/{id}/cover")
-    public Book updateCover(@PathVariable Long id, @RequestBody Book book) {
-        return bookService.updateCover(id, book.getCoverImageUrl());
+    public Book updateCover(@PathVariable Long id, @RequestBody Book book, Principal principal) {
+        return bookService.updateCover(id, book.getCoverImageUrl(), principal.getName());
     }
 
     @DeleteMapping("/{id}")

@@ -59,8 +59,9 @@ public class BookService {
     }
 
     @Transactional
-    public Book updateCover(Long id, String url) {
+    public Book updateCover(Long id, String url, String username) {
         Book book = getBook(id);
+        checkOwner(book, username);
         book.setCoverImageUrl(url);
         book.setUpdatedAt(LocalDateTime.now());
         return bookRepository.save(book);
@@ -82,8 +83,7 @@ public class BookService {
 }
 
     private void checkOwner(Book book, String username) {
-        if (book.getCreatedBy() == null) return;
-        if (!book.getCreatedBy().equals(username)) {
+        if (book.getCreatedBy() == null || !book.getCreatedBy().equals(username)) {
             throw new AccessDeniedException("권한이 없습니다.");
         }
     }

@@ -7,7 +7,7 @@ function ReviewItem({ review, bookTitle, onLike, onEdit, onDelete, currentUser }
   const [nickname, setNickname] = useState(review.nickname);
   const [content, setContent] = useState(review.content);
 
-  const isOwner = review.createdBy === currentUser;
+  const isOwner = !!currentUser && review.createdBy === currentUser;
 
   const handleUpdate = async () => {
     if (!nickname.trim()) {

@@ -39,7 +39,6 @@ public class ReviewService {
         checkOwner(review, username);
         if (request.getContent() != null) review.setContent(request.getContent());
         if (request.getNickname() != null) review.setNickname(request.getNickname());
-        if (request.getLikes() != null) review.setLikes(request.getLikes());
         review.setUpdatedAt(LocalDateTime.now());
         return reviewRepository.save(review);
     }
@@ -61,8 +60,7 @@ public class ReviewService {
     }
 
     private void checkOwner(Review review, String username) {
-        if (review.getCreatedBy() == null) return;
-        if (!review.getCreatedBy().equals(username)) {
+        if (review.getCreatedBy() == null || !review.getCreatedBy().equals(username)) {
             throw new AccessDeniedException("권한이 없습니다.");
         }
     }

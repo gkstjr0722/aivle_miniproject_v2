@@ -21,7 +21,7 @@ function DetailPage({
     b => String(b.id) === String(id)
   );
   const currentUser = localStorage.getItem('username');
-  const isOwner = book.createdBy === currentUser;
+  const isOwner = !!currentUser && book?.createdBy === currentUser;
 
   const [isEditing, setIsEditing] = useState(false);
 
