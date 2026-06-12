@@ -43,4 +43,10 @@ public class GlobalExceptionHandler {
         body.put("timestamp", LocalDateTime.now());
         return ResponseEntity.status(status).body(body);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String, Object>> handleRuntimeException(
+            RuntimeException e, HttpServletRequest req) {
+        return build(HttpStatus.BAD_REQUEST, e.getMessage(), req);
+    }
 }

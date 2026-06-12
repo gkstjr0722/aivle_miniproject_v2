@@ -24,6 +24,7 @@ public class AuthService {
         User user = User.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
+                .role("USER")
                 .build();
         userRepository.save(user);
     }
@@ -34,7 +35,7 @@ public class AuthService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("아이디 또는 비밀번호가 틀렸습니다.");
         }
-        String token = jwtUtil.generateToken(username);
-        return Map.of("token", token);
+        String token = jwtUtil.generateToken(username, user.getRole());
+        return Map.of("token", token, "role", user.getRole());
     }
 }

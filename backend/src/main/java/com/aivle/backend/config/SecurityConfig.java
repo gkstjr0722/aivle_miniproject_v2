@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/reviews/**").permitAll()
                 .requestMatchers(HttpMethod.PATCH, "/books/*/likes").permitAll()
                 .requestMatchers(HttpMethod.PATCH, "/reviews/*/likes").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

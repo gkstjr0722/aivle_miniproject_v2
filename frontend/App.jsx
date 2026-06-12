@@ -10,6 +10,7 @@ import ReviewListPage from './pages/ReviewListPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import MyPage from './pages/MyPage';
+import AdminPage from './pages/AdminPage';
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -211,6 +212,9 @@ function App() {
           <h1 className="logo">📚 도서관리</h1>
         </div>
         <nav>
+          {localStorage.getItem('role') === 'ADMIN' && (
+            <Link to="/admin">관리자</Link>
+          )}
           <Link to="/">홈</Link>
           <Link to="/list">도서목록</Link>
           <Link to="/reviews">리뷰목록</Link>
@@ -251,6 +255,7 @@ function App() {
           <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </main>
     </div>
