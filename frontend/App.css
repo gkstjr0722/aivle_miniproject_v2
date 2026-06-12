@@ -1934,3 +1934,160 @@ nav a[href="/signup"]:hover {
   font-size: 0.85rem;
   color: #888;
 }
+
+.admin-container {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.admin-header {
+  margin-bottom: 24px;
+}
+
+.admin-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.admin-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border: 1.5px solid #ddd;
+  border-radius: 20px;
+  background: white;
+  font-size: 0.9rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-tab:hover {
+  border-color: #6c3ce1;
+  color: #6c3ce1;
+}
+
+.admin-tab.active {
+  background: #6c3ce1;
+  border-color: #6c3ce1;
+  color: white;
+}
+
+.admin-tab-count {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 0.78rem;
+}
+
+.admin-tab:not(.active) .admin-tab-count {
+  background: #f0f0f0;
+  color: #888;
+}
+
+.admin-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-table thead tr {
+  background: #f8f7ff;
+  border-bottom: 1.5px solid #ebe8ff;
+}
+
+.admin-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #6c3ce1;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.admin-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.15s;
+}
+
+.admin-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:hover {
+  background: #faf9ff;
+}
+
+.admin-table td {
+  padding: 12px 16px;
+  color: #333;
+}
+
+.admin-td-muted {
+  color: #aaa !important;
+  font-size: 0.85rem;
+}
+
+.admin-td-bold {
+  font-weight: 500;
+  color: #1a1a1a !important;
+}
+
+.admin-td-content {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-delete-btn {
+  background: none;
+  border: 1.5px solid #ffcccc;
+  color: #e03e3e;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-delete-btn:hover {
+  background: #e03e3e;
+  color: white;
+  border-color: #e03e3e;
+}
+
+.admin-role-badge {
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.admin-role-badge.admin {
+  background: #f0ebff;
+  color: #6c3ce1;
+}
+
+.admin-role-badge.user {
+  background: #f0f0f0;
+  color: #888;
+}
